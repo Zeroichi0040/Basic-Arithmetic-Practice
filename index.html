@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Arithmetic Practice</title>
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --primary-dark: #4f46e5;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+            --background-color: #f8fafc;
+            --card-color: #ffffff;
+            --text-color: #1e293b;
+            --text-light: #64748b;
+            --border-color: #e2e8f0;
+            --border-radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .card {
+            background-color: var(--card-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--text-light);
+            font-size: 16px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        input[type="number"], select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 6px 12px;
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+
+        .checkbox-item:hover {
+            background: #e2e8f0;
+        }
+
+        .checkbox-item input {
+            margin-right: 6px;
+        }
+
+        .button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .button:disabled {
+            background-color: #cbd5e1;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .button-secondary {
+            background-color: #f1f5f9;
+            color: var(--text-color);
+        }
+
+        .button-secondary:hover {
+            background-color: #e2e8f0;
+        }
+
+        .button-reset {
+            background-color: #f1f5f9;
+            color: var(--text-color);
+            margin-top: 10px;
+        }
+
+        .button-reset:hover {
+            background-color: #e2e8f0;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            margin-top: 8px;
+            font-size: 14px;
+            display: none;
+            background: #fef2f2;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 3px solid var(--error-color);
+        }
+
+        #session-section {
+            display: none;
+        }
+
+        .problem-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: var(--border-radius);
+        }
+
+        .problem {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        #answer-input {
+            font-size: 24px;
+            text-align: center;
+            width: 200px;
+            margin: 0 auto 16px;
+            display: block;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        #answer-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            background: #f1f5f9;
+            padding: 16px;
+            border-radius: var(--border-radius);
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .progress-container {
+            margin-top: 16px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .key {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .key:hover {
+            background-color: #f8fafc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        }
+
+        .key:active {
+            transform: translateY(0);
+        }
+
+        .key.enter {
+            background-color: var(--primary-color);
+            color: white;
+            grid-column: span 3;
+        }
+
+        .key.enter:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .key.backspace {
+            background-color: #fef2f2;
+            color: var(--error-color);
+        }
+
+        .key.backspace:hover {
+            background-color: #fee2e2;
+        }
+
+        .floating-popup {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            padding: 16px 32px;
+            border-radius: 8px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            min-width: 200px;
+        }
+
+        .floating-popup.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .floating-popup.correct {
+            background-color: var(--success-color);
+        }
+
+        .floating-popup.incorrect {
+            background-color: var(--error-color);
+        }
+
+        .session-controls {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .session-controls .button {
+            flex: 1;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--primary-color);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .badge.warning {
+            background: var(--warning-color);
+        }
+
+        .help-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 8px;
+            cursor: help;
+            position: relative;
+        }
+
+        .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 10;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: #1e293b;
+        }
+
+        .help-icon:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .credit {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 14px;
+            margin-top: 20px;
+            padding: 10px;
+        }
+
+        .performance-summary {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            background: #f8fafc;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .performance-summary h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .performance-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .performance-stat {
+            text-align: center;
+        }
+
+        .performance-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .performance-label {
+            font-size: 12px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .performance-message {
+            font-size: 16px;
+            color: var(--text-color);
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 0;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .problem {
+                font-size: 28px;
+            }
+            
+            .tooltip {
+                width: 160px;
+                left: 0;
+                transform: none;
+            }
+            
+            .tooltip::after {
+                left: 20px;
+            }
+            
+            .performance-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card" id="setup-section">
+            <div class="header">
+                <h1>Basic Arithmetic Practice</h1>
+            </div>
+            
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label>
+                        Operations to Practice:
+                        <span class="help-icon">?
+                            <div class="tooltip">Choose which math operations you want to practice. You can select one or multiple.</div>
+                        </span>
+                    </label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="addition" checked>
+                            <label for="addition">Addition</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="subtraction">
+                            <label for="subtraction">Subtraction</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="multiplication">
+                            <label for="multiplication">Multiplication</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="division">
+                            <label for="division">Division</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="operand-digits">
+                        How Many Digits in Each Operand
+                        <span class="help-icon">?
+                            <div class="tooltip">How many digits each number in the problem should have. Example: 1 = numbers like 5, 9; 2 = numbers like 15, 42</div>
+                        </span>
+                    </label>
+                    <input type="number" id="operand-digits" min="1" value="1">
+                </div>
+
+                <div class="form-group">
+                    <label for="result-digits">
+                        How Many Digits in the Answer
+                        <span class="help-icon">?
+                            <div class="tooltip">Maximum number of digits allowed in the answer. Helps control problem difficulty.</div>
+                        </span>
+                    </label>
+                    <input type="number" id="result-digits" min="1" value="2">
+                </div>
+
+                <div class="form-group">
+                    <label for="operand-count">
+                        How many operands in a problem
+                        <span class="help-icon">?
+                            <div class="tooltip">How many numbers to include in each problem. Example: 2 = A + B, 3 = A + B + C</div>
+                        </span>
+                    </label>
+                    <input type="number" id="operand-count" min="2" value="2">
+                </div>
+
+                <div class="form-group" id="operator-mixing-group" style="display: none;">
+                    <label for="operator-mixing">
+                        Operator Style
+                        <span class="help-icon">?
+                            <div class="tooltip">Single: Use only one type of operator per problem. Mixed: Combine different operators in one problem.</div>
+                        </span>
+                    </label>
+                    <select id="operator-mixing">
+                        <option value="single">Single Operator</option>
+                        <option value="mixed">Mixed Operators</option>
+                    </select>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="problem-count">
+                        Number of Problems 
+                        <span class="badge">0 = infinite</span>
+                        <span class="help-icon">?
+                            <div class="tooltip">Set how many problems to solve. Use 0 for unlimited practice.</div>
+                        </span>
+                    </label>
+                    <input type="number" id="problem-count" min="0" value="10">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button id="start-button" class="button">Start Practice Session</button>
+                <div id="setup-error" class="error-message"></div>
+                <button id="reset-button" class="button button-reset">Reset to Defaults</button>
+            </div>
+            
+            <div id="performance-summary" class="performance-summary" style="display: none;">
+                <h3>Session Results</h3>
+                <div class="performance-stats">
+                    <div class="performance-stat">
+                        <div id="performance-solved" class="performance-value">0</div>
+                        <div class="performance-label">Problems Solved</div>
+                    </div>
+                    <div class="performance-stat">
+                        <div id="performance-correct" class="performance-value">0</div>
+                        <div class="performance-label">Correct Answers</div>
+                    </div>
+                    <div class="performance-stat">
+                        <div id="performance-accuracy" class="performance-value">0%</div>
+                        <div class="performance-label">Accuracy</div>
+                    </div>
+                    <div class="performance-stat">
+                        <div id="performance-score" class="performance-value">0</div>
+                        <div class="performance-label">Score</div>
+                    </div>
+                </div>
+                <div id="performance-message" class="performance-message"></div>
+            </div>
+        </div>
+
+        <div class="card" id="session-section">
+            <div class="header">
+                <h2>Practice Session</h2>
+            </div>
+            
+            <div class="problem-container">
+                <div id="problem" class="problem"></div>
+                <input type="text" id="answer-input" autocomplete="off" placeholder="Enter answer">
+                <div class="keypad">
+                    <button class="key" data-value="7">7</button>
+                    <button class="key" data-value="8">8</button>
+                    <button class="key" data-value="9">9</button>
+                    <button class="key" data-value="4">4</button>
+                    <button class="key" data-value="5">5</button>
+                    <button class="key" data-value="6">6</button>
+                    <button class="key" data-value="1">1</button>
+                    <button class="key" data-value="2">2</button>
+                    <button class="key" data-value="3">3</button>
+                    <button class="key" data-value="0">0</button>
+                    <button class="key backspace" id="backspace">⌫</button>
+                    <button class="key enter" id="submit-answer">Enter</button>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Solved</div>
+                    <div id="problems-solved" class="stat-value">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Correct</div>
+                    <div id="correct-count" class="stat-value">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Accuracy</div>
+                    <div id="accuracy" class="stat-value">0%</div>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div id="progress" class="progress"></div>
+                </div>
+            </div>
+
+            <div class="session-controls">
+                <button id="end-session" class="button button-secondary">End Session</button>
+            </div>
+        </div>
+
+        <div id="floating-popup" class="floating-popup"></div>
+        
+        <div class="credit">
+            Created by Zeroichi
+        </div>
+    </div>
+
+    <script>
+        // DOM elements
+        const setupSection = document.getElementById('setup-section');
+        const sessionSection = document.getElementById('session-section');
+        const startButton = document.getElementById('start-button');
+        const endSessionButton = document.getElementById('end-session');
+        const resetButton = document.getElementById('reset-button');
+        const setupError = document.getElementById('setup-error');
+        const problemElement = document.getElementById('problem');
+        const answerInput = document.getElementById('answer-input');
+        const problemsSolvedElement = document.getElementById('problems-solved');
+        const correctCountElement = document.getElementById('correct-count');
+        const accuracyElement = document.getElementById('accuracy');
+        const progressElement = document.getElementById('progress');
+        const floatingPopup = document.getElementById('floating-popup');
+        const keypadButtons = document.querySelectorAll('.key');
+        const backspaceButton = document.getElementById('backspace');
+        const submitButton = document.getElementById('submit-answer');
+        const operatorMixingGroup = document.getElementById('operator-mixing-group');
+        const operationCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+        const performanceSummary = document.getElementById('performance-summary');
+        const performanceSolved = document.getElementById('performance-solved');
+        const performanceCorrect = document.getElementById('performance-correct');
+        const performanceAccuracy = document.getElementById('performance-accuracy');
+        const performanceScore = document.getElementById('performance-score');
+        const performanceMessage = document.getElementById('performance-message');
+        const operandCountInput = document.getElementById('operand-count');
+        const operandDigitsInput = document.getElementById('operand-digits');
+        const resultDigitsInput = document.getElementById('result-digits');
+        const problemCountInput = document.getElementById('problem-count');
+        const operatorMixingSelect = document.getElementById('operator-mixing');
+
+        // Session variables
+        let session = {
+            problemsSolved: 0,
+            correctAnswers: 0,
+            totalProblems: 0,
+            currentProblem: null,
+            isActive: false,
+            problemCount: 0
+        };
+
+        // Operation symbols
+        const operations = {
+            addition: '+',
+            subtraction: '-',
+            multiplication: '×',
+            division: '÷'
+        };
+
+        // Event listeners
+        startButton.addEventListener('click', startSession);
+        endSessionButton.addEventListener('click', endSession);
+        resetButton.addEventListener('click', resetToDefaults);
+        answerInput.addEventListener('keydown', handleAnswerInput);
+        
+        // Listen for operation checkbox changes to update operator mixing visibility
+        operationCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateOperatorMixingVisibility);
+        });
+        
+        // Listen for operand count changes to update operator mixing visibility
+        operandCountInput.addEventListener('input', updateOperatorMixingVisibility);
+        
+        // Listen for digit changes to validate constraints
+        operandDigitsInput.addEventListener('input', validateConstraints);
+        resultDigitsInput.addEventListener('input', validateConstraints);
+        operandCountInput.addEventListener('input', validateConstraints);
+        
+        // Keypad event listeners
+        keypadButtons.forEach(button => {
+            if (button.id !== 'backspace' && button.id !== 'submit-answer') {
+                button.addEventListener('click', () => {
+                    const value = button.getAttribute('data-value');
+                    answerInput.value += value;
+                    // Prevent focus on mobile to avoid keyboard popup
+                    if (isMobile()) {
+                        answerInput.blur();
+                    }
+                });
+            }
+        });
+        
+        backspaceButton.addEventListener('click', () => {
+            answerInput.value = answerInput.value.slice(0, -1);
+            // Prevent focus on mobile to avoid keyboard popup
+            if (isMobile()) {
+                answerInput.blur();
+            }
+        });
+        
+        submitButton.addEventListener('click', () => {
+            checkAnswer();
+        });
+
+        // Reset form to default values
+        function resetToDefaults() {
+            // Clear any errors
+            setupError.style.display = 'none';
+            
+            // Reset checkboxes
+            document.getElementById('addition').checked = true;
+            document.getElementById('subtraction').checked = false;
+            document.getElementById('multiplication').checked = false;
+            document.getElementById('division').checked = false;
+            
+            // Reset number inputs
+            operandDigitsInput.value = 1;
+            resultDigitsInput.value = 2;
+            operandCountInput.value = 2;
+            problemCountInput.value = 10;
+            
+            // Reset select
+            operatorMixingSelect.value = 'single';
+            
+            // Update UI
+            updateOperatorMixingVisibility();
+            validateConstraints();
+        }
+
+        // Check if device is mobile
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // Validate constraints based on current settings
+        function validateConstraints() {
+            const operandDigits = parseInt(operandDigitsInput.value) || 1;
+            const resultDigits = parseInt(resultDigitsInput.value) || 1;
+            const operandCount = parseInt(operandCountInput.value) || 2;
+            const selectedOperations = getSelectedOperations();
+            
+            // Clear any previous errors
+            setupError.style.display = 'none';
+            
+            // Check for impossible combinations
+            if (resultDigits === 1) {
+                // For single-digit answers, calculate maximum possible operands for each operation
+                let maxPossibleOperands = 0;
+                
+                // For addition
+                if (selectedOperations.includes('addition')) {
+                    // With 1-digit operands: max is 9 (1+1+...+1 = 9)
+                    // With 2+ digit operands: minimum is 10, so even 2 operands would give at least 20 (2 digits)
+                    maxPossibleOperands = Math.max(maxPossibleOperands, operandDigits === 1 ? 9 : 1);
+                }
+                
+                // For subtraction
+                if (selectedOperations.includes('subtraction')) {
+                    // With 1-digit operands: we can have more operands (9-1-1-...)
+                    // With 2+ digit operands: we need to be careful with the result
+                    maxPossibleOperands = Math.max(maxPossibleOperands, operandDigits === 1 ? 9 : 2);
+                }
+                
+                // For multiplication
+                if (selectedOperations.includes('multiplication')) {
+                    // With 1-digit operands: max is 3 (2*2*2=8)
+                    // With 2+ digit operands: minimum is 10, so even 2 operands would give at least 100 (3 digits)
+                    maxPossibleOperands = Math.max(maxPossibleOperands, operandDigits === 1 ? 3 : 1);
+                }
+                
+                // For division
+                if (selectedOperations.includes('division')) {
+                    // With 1-digit operands: we can have more operands
+                    // With 2+ digit operands: we need to be careful
+                    maxPossibleOperands = Math.max(maxPossibleOperands, operandDigits === 1 ? 9 : 3);
+                }
+                
+                if (operandCount > maxPossibleOperands) {
+                    showSetupError(`With ${operandDigits}-digit operands and ${resultDigits}-digit answers, the current limit is ${maxPossibleOperands} operands. Please reduce the number of operands.`);
+                    return false;
+                }
+            }
+            
+            // Check for multiplication constraints
+            if (selectedOperations.includes('multiplication')) {
+                const minResultDigits = operandDigits * 2;
+                if (resultDigits < minResultDigits) {
+                    showSetupError(`For multiplication with ${operandDigits}-digit numbers, answers should have at least ${minResultDigits} digits.`);
+                    return false;
+                }
+            }
+            
+            // Check for addition constraints with multiple operands
+            if (selectedOperations.includes('addition') && operandCount > 1) {
+                const minPossibleResult = operandCount * Math.pow(10, operandDigits - 1);
+                const maxPossibleResult = operandCount * (Math.pow(10, operandDigits) - 1);
+                const minResultDigits = Math.floor(Math.log10(minPossibleResult)) + 1;
+                const maxResultDigits = Math.floor(Math.log10(maxPossibleResult)) + 1;
+                
+                if (resultDigits < minResultDigits) {
+                    showSetupError(`For addition with ${operandCount} ${operandDigits}-digit numbers, answers must have at least ${minResultDigits} digits.`);
+                    return false;
+                }
+                
+                if (resultDigits < maxResultDigits) {
+                    // This is just a warning, not an error
+                    // showSetupError(`For addition with ${operandCount} ${operandDigits}-digit numbers, some answers may have up to ${maxResultDigits} digits.`);
+                }
+            }
+            
+            // Check for subtraction constraints
+            if (selectedOperations.includes('subtraction') && operandCount > 1) {
+                // For subtraction, we need to ensure the result can be non-negative
+                // The minimum result is: (smallest operand) - (sum of largest other operands)
+                const minOperand = Math.pow(10, operandDigits - 1);
+                const maxOperand = Math.pow(10, operandDigits) - 1;
+                const minResult = minOperand - (operandCount - 1) * maxOperand;
+                
+                if (minResult < 0 && !selectedOperations.includes('subtraction')) {
+                    showSetupError(`With ${operandCount} ${operandDigits}-digit numbers and only positive results, subtraction may not be possible.`);
+                    return false;
+                }
+            }
+            
+            // Check for division constraints
+            if (selectedOperations.includes('division')) {
+                // For division, we need at least 2 operands
+                if (operandCount < 2) {
+                    showSetupError('Division requires at least 2 operands.');
+                    return false;
+                }
+                
+                // Check if result digits is sufficient
+                const maxOperand = Math.pow(10, operandDigits) - 1;
+                const minOperand = Math.pow(10, operandDigits - 1);
+                const maxResult = maxOperand / minOperand;
+                const maxResultDigits = Math.floor(Math.log10(maxResult)) + 1;
+                
+                if (resultDigits < maxResultDigits) {
+                    showSetupError(`For division with ${operandDigits}-digit numbers, answers may have up to ${maxResultDigits} digits.`);
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+
+        // Update operator mixing field visibility based on selected operations
+        function updateOperatorMixingVisibility() {
+            const selectedOperations = getSelectedOperations();
+            const operandCount = parseInt(document.getElementById('operand-count').value);
+            
+            // Show operator mixing only if:
+            // - Multiple operations are selected (2 or more)
+            // - We have at least 3 values per problem
+            const shouldShow = selectedOperations.length >= 2 && operandCount >= 3;
+            
+            operatorMixingGroup.style.display = shouldShow ? 'block' : 'none';
+            
+            // Also validate constraints when these values change
+            validateConstraints();
+        }
+
+        // Start a new practice session
+        function startSession() {
+            // Hide performance summary
+            performanceSummary.style.display = 'none';
+            
+            // Get user preferences
+            const selectedOperations = getSelectedOperations();
+            const operandDigits = parseInt(document.getElementById('operand-digits').value);
+            const resultDigits = parseInt(document.getElementById('result-digits').value);
+            const operandCount = parseInt(document.getElementById('operand-count').value);
+            const operatorMixing = document.getElementById('operator-mixing').value;
+            const problemCount = parseInt(document.getElementById('problem-count').value);
+
+            // Validate inputs
+            if (!validateInputs(selectedOperations, operandDigits, resultDigits, operandCount)) {
+                return;
+            }
+
+            // Initialize session
+            session = {
+                problemsSolved: 0,
+                correctAnswers: 0,
+                totalProblems: problemCount,
+                currentProblem: null,
+                isActive: true,
+                problemCount: problemCount,
+                settings: {
+                    operations: selectedOperations,
+                    operandDigits: operandDigits,
+                    resultDigits: resultDigits,
+                    operandCount: operandCount,
+                    operatorMixing: operatorMixing
+                }
+            };
+
+            // Update UI
+            setupSection.style.display = 'none';
+            sessionSection.style.display = 'block';
+            updateStats();
+            generateProblem();
+            
+            // On mobile, don't focus the input automatically to prevent keyboard popup
+            if (!isMobile()) {
+                answerInput.focus();
+            }
+        }
+
+        // End the current session
+        function endSession() {
+            session.isActive = false;
+            sessionSection.style.display = 'none';
+            setupSection.style.display = 'block';
+            setupError.textContent = '';
+            setupError.style.display = 'none';
+            
+            // Show performance summary
+            showPerformanceSummary();
+        }
+
+        // Show performance summary
+        function showPerformanceSummary() {
+            const problemsSolved = session.problemsSolved;
+            const correctAnswers = session.correctAnswers;
+            const accuracy = problemsSolved > 0 ? Math.round((correctAnswers / problemsSolved) * 100) : 0;
+            
+            // Calculate score (correct answers * accuracy percentage)
+            const score = correctAnswers * accuracy;
+            
+            // Update UI
+            performanceSolved.textContent = problemsSolved;
+            performanceCorrect.textContent = correctAnswers;
+            performanceAccuracy.textContent = `${accuracy}%`;
+            performanceScore.textContent = score;
+            performanceSummary.style.display = 'block';
+        }
+
+        // Get selected operations from checkboxes
+        function getSelectedOperations() {
+            const selected = [];
+            if (document.getElementById('addition').checked) selected.push('addition');
+            if (document.getElementById('subtraction').checked) selected.push('subtraction');
+            if (document.getElementById('multiplication').checked) selected.push('multiplication');
+            if (document.getElementById('division').checked) selected.push('division');
+            return selected;
+        }
+
+        // Validate user inputs
+        function validateInputs(selectedOperations, operandDigits, resultDigits, operandCount) {
+            // Check if at least one operation is selected
+            if (selectedOperations.length === 0) {
+                showSetupError('Please select at least one operation.');
+                return false;
+            }
+
+            // Check if operand count is valid
+            if (operandCount < 2) {
+                showSetupError('Number of values must be at least 2.');
+                return false;
+            }
+
+            // Check if result digits is sufficient for the operations
+            // For multiplication, result digits should be at least operandDigits * 2
+            if (selectedOperations.includes('multiplication') && resultDigits < operandDigits * 2) {
+                showSetupError(`For multiplication with ${operandDigits}-digit numbers, answers should have at least ${operandDigits * 2} digits.`);
+                return false;
+            }
+
+            // Check for impossible combinations with 1-digit answers
+            if (resultDigits === 1) {
+                let maxPossibleOperands = 0;
+                
+                if (selectedOperations.includes('addition')) {
+                    maxPossibleOperands = Math.max(maxPossibleOperands, operandDigits === 1 ? 9 : 1);
+                }
+                
+                if (selectedOperations.includes('subtraction')) {
+                    maxPossibleOperands = Math.max(maxPossibleOperands, operandDigits === 1 ? 9 : 2);
+                }
+                
+                if (selectedOperations.includes('multiplication')) {
+                    maxPossibleOperands = Math.max(maxPossibleOperands, operandDigits === 1 ? 3 : 1);
+                }
+                
+                if (selectedOperations.includes('division')) {
+                    maxPossibleOperands = Math.max(maxPossibleOperands, operandDigits === 1 ? 9 : 3);
+                }
+                
+                if (operandCount > maxPossibleOperands) {
+                    showSetupError(`With ${operandDigits}-digit operands and ${resultDigits}-digit answers, the current limit is ${maxPossibleOperands} operands. Please reduce the number of operands.`);
+                    return false;
+                }
+            }
+
+            // Check for addition constraints
+            if (selectedOperations.includes('addition') && operandCount > 1) {
+                const minPossibleResult = operandCount * Math.pow(10, operandDigits - 1);
+                const minResultDigits = Math.floor(Math.log10(minPossibleResult)) + 1;
+                
+                if (resultDigits < minResultDigits) {
+                    showSetupError(`For addition with ${operandCount} ${operandDigits}-digit numbers, answers must have at least ${minResultDigits} digits.`);
+                    return false;
+                }
+            }
+
+            // Clear any previous errors
+            setupError.style.display = 'none';
+            return true;
+        }
+
+        // Show setup error message
+        function showSetupError(message) {
+            setupError.textContent = message;
+            setupError.style.display = 'block';
+        }
+
+        // Generate a new problem
+        function generateProblem() {
+            if (!session.isActive) return;
+
+            // Check if we've reached the problem limit (if not unlimited)
+            if (session.totalProblems > 0 && session.problemsSolved >= session.totalProblems) {
+                endSession();
+                return;
+            }
+
+            const settings = session.settings;
+            let problem, answer;
+            let attempts = 0;
+            const maxAttempts = 100; // Prevent infinite loops
+
+            // Keep generating until we get a valid problem
+            do {
+                attempts++;
+                if (attempts > maxAttempts) {
+                    showSetupError('Could not generate valid problems with current settings. Please adjust your constraints.');
+                    endSession();
+                    return;
+                }
+
+                problem = [];
+                const operands = [];
+                
+                // Generate operands
+                for (let i = 0; i < settings.operandCount; i++) {
+                    const min = Math.pow(10, settings.operandDigits - 1);
+                    const max = Math.pow(10, settings.operandDigits) - 1;
+                    operands.push(Math.floor(Math.random() * (max - min + 1)) + min);
+                }
+
+                // Determine operators
+                let operators;
+                const shouldMixOperators = settings.operatorMixing === 'mixed' && 
+                                         settings.operations.length > 1 && 
+                                         settings.operandCount >= 3;
+                
+                if (!shouldMixOperators) {
+                    // Use a single operator for all operations
+                    const op = settings.operations[Math.floor(Math.random() * settings.operations.length)];
+                    operators = Array(settings.operandCount - 1).fill(op);
+                } else {
+                    // Use mixed operators
+                    operators = [];
+                    for (let i = 0; i < settings.operandCount - 1; i++) {
+                        operators.push(settings.operations[Math.floor(Math.random() * settings.operations.length)]);
+                    }
+                }
+
+                // Build problem expression
+                problem.push(operands[0]);
+                for (let i = 0; i < operators.length; i++) {
+                    problem.push(operations[operators[i]]);
+                    problem.push(operands[i + 1]);
+                }
+
+                // Calculate answer
+                answer = operands[0];
+                for (let i = 0; i < operators.length; i++) {
+                    const operator = operators[i];
+                    const nextOperand = operands[i + 1];
+                    
+                    switch (operator) {
+                        case 'addition':
+                            answer += nextOperand;
+                            break;
+                        case 'subtraction':
+                            answer -= nextOperand;
+                            break;
+                        case 'multiplication':
+                            answer *= nextOperand;
+                            break;
+                        case 'division':
+                            // For division, we want integer results
+                            if (nextOperand === 0) {
+                                answer = NaN; // This will cause regeneration
+                            } else {
+                                // Ensure integer division
+                                if (answer % nextOperand !== 0) {
+                                    answer = NaN;
+                                } else {
+                                    answer = answer / nextOperand;
+                                }
+                            }
+                            break;
+                    }
+                }
+            } while (
+                isNaN(answer) || 
+                !isFinite(answer) ||
+                // Check result digit constraint
+                Math.abs(answer).toString().length > settings.resultDigits ||
+                // Check for negative results if not allowed
+                (answer < 0 && !settings.operations.includes('subtraction')) ||
+                // For division, ensure it's integer division (already handled above)
+                (settings.operations.includes('division') && !Number.isInteger(answer))
+            );
+
+            // Store current problem
+            session.currentProblem = {
+                expression: problem.join(' '),
+                answer: answer
+            };
+
+            // Display problem
+            problemElement.textContent = session.currentProblem.expression + ' = ?';
+            answerInput.value = '';
+            
+            // On mobile, don't focus the input automatically to prevent keyboard popup
+            if (!isMobile()) {
+                answerInput.focus();
+            }
+        }
+
+        // Handle answer input (keyboard)
+        function handleAnswerInput(e) {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            } else if (e.key === 'Backspace') {
+                // Allow backspace
+            } else if (!/^\d$|-/.test(e.key)) {
+                // Only allow digits and minus sign
+                e.preventDefault();
+            }
+        }
+
+        // Check the user's answer
+        function checkAnswer() {
+            if (!session.isActive || !session.currentProblem) return;
+
+            const userAnswer = parseInt(answerInput.value);
+            const correctAnswer = session.currentProblem.answer;
+            const isCorrect = userAnswer === correctAnswer;
+
+            // Update session stats
+            session.problemsSolved++;
+            if (isCorrect) {
+                session.correctAnswers++;
+            }
+
+            // Update UI
+            updateStats();
+            showFloatingPopup(isCorrect, correctAnswer);
+
+            // Generate next problem immediately
+            generateProblem();
+        }
+
+        // Update statistics display
+        function updateStats() {
+            problemsSolvedElement.textContent = session.problemsSolved;
+            correctCountElement.textContent = session.correctAnswers;
+            
+            const accuracy = session.problemsSolved > 0 
+                ? Math.round((session.correctAnswers / session.problemsSolved) * 100) 
+                : 0;
+            accuracyElement.textContent = `${accuracy}%`;
+            
+            // Update progress bar
+            if (session.totalProblems > 0) {
+                const progress = (session.problemsSolved / session.totalProblems) * 100;
+                progressElement.style.width = `${progress}%`;
+            } else {
+                progressElement.style.width = '0%';
+            }
+        }
+
+        // Show floating result popup
+        function showFloatingPopup(isCorrect, correctAnswer) {
+            floatingPopup.textContent = isCorrect ? 'Correct!' : `Incorrect! Answer: ${correctAnswer}`;
+            floatingPopup.className = `floating-popup ${isCorrect ? 'correct' : 'incorrect'}`;
+            floatingPopup.classList.add('show');
+            
+            setTimeout(() => {
+                floatingPopup.classList.remove('show');
+            }, 2000);
+        }
+
+        // Initialize operator mixing visibility
+        updateOperatorMixingVisibility();
+
+        // Debug function
+        window.debugSession = function() {
+            console.log('Current Session:', session);
+        };
+    </script>
+</body>
+</html>
